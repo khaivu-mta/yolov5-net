@@ -24,6 +24,7 @@ namespace Yolov5Net.Scorer
         private readonly InferenceSession _inferenceSession;
 
         /// <summary>
+        /// Đầu ra giá trị giữa 0 và 1.
         /// Outputs value between 0 and 1.
         /// </summary>
         private float Sigmoid(float value)
@@ -32,6 +33,7 @@ namespace Yolov5Net.Scorer
         }
 
         /// <summary>
+        /// Chuyển đổi định dạng xywh bbox thành xyxy.
         /// Converts xywh bbox format to xyxy.
         /// </summary>
         private float[] Xywh2xyxy(float[] source)
@@ -47,6 +49,7 @@ namespace Yolov5Net.Scorer
         }
 
         /// <summary>
+        /// Trả về giá trị cho phép giữa min và max.
         /// Returns value clamped to the inclusive range of min and max.
         /// </summary>
         public float Clamp(float value, float min, float max)
@@ -56,6 +59,7 @@ namespace Yolov5Net.Scorer
 
         /// <summary>
         /// Resizes image keeping ratio to fit model input size.
+        /// Thay đổi kích thước tỷ lệ giữ hình ảnh để phù hợp với kích thước đầu vào của mô hình.
         /// </summary>
         private Bitmap ResizeImage(Image image)
         {
@@ -85,6 +89,7 @@ namespace Yolov5Net.Scorer
         }
 
         /// <summary>
+        /// Trích xuất pixel thành tensor cho đầu vào mạng.
         /// Extracts pixels into tensor for net input.
         /// </summary>
         private Tensor<float> ExtractPixels(Image image)
@@ -118,6 +123,7 @@ namespace Yolov5Net.Scorer
         }
 
         /// <summary>
+        /// Chạy phiên suy luận.
         /// Runs inference session.
         /// </summary>
         private DenseTensor<float>[] Inference(Image image)
@@ -147,6 +153,7 @@ namespace Yolov5Net.Scorer
         }
 
         /// <summary>
+        /// Phân tích đầu ra ròng (phát hiện) thành các dự đoán.
         /// Parses net output (detect) to predictions.
         /// </summary>
         private List<YoloPrediction> ParseDetect(DenseTensor<float> output, Image image)
@@ -197,6 +204,7 @@ namespace Yolov5Net.Scorer
         }
 
         /// <summary>
+        /// Phân tích kết quả đầu ra ròng (sigmoid) thành dự đoán.
         /// Parses net outputs (sigmoid) to predictions.
         /// </summary>
         private List<YoloPrediction> ParseSigmoid(DenseTensor<float>[] output, Image image)
@@ -261,6 +269,7 @@ namespace Yolov5Net.Scorer
         }
 
         /// <summary>
+        /// Phân tích kết quả đầu ra ròng (sigmoid hoặc lớp phát hiện) thành các dự đoán.
         /// Parses net outputs (sigmoid or detect layer) to predictions.
         /// </summary>
         private List<YoloPrediction> ParseOutput(DenseTensor<float>[] output, Image image)
@@ -269,6 +278,7 @@ namespace Yolov5Net.Scorer
         }
 
         /// <summary>
+        /// Loại bỏ các bản sao chồng chéo (nms).
         /// Removes overlaped duplicates (nms).
         /// </summary>
         private List<YoloPrediction> Supress(List<YoloPrediction> items)
@@ -303,6 +313,7 @@ namespace Yolov5Net.Scorer
         }
 
         /// <summary>
+        /// Chạy phát hiện đối tượng.
         /// Runs object detection.
         /// </summary>
         public List<YoloPrediction> Predict(Image image)
